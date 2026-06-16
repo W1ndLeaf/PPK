@@ -1,0 +1,34 @@
+# .NET
+[Bb]in/
+[Oo]bj/
+*.user
+.vs/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+
+# secrets
+appsettings.*.Local.json
+*.local.env
+
+# course materials
+*.pdf
+PPPK-Vjezbe-*.sql
+Vjezbe-*.sql
+
+# local data
+project2-bird-pipeline/audio/*
+!project2-bird-pipeline/audio/.gitkeep
+project2-bird-pipeline/output/*
+!project2-bird-pipeline/output/.gitkeep
+defense-guide.html

@@ -1,0 +1,36 @@
+# Project 1 storage: PostgreSQL + pgAdmin (web UI to inspect the DB).
+# Start:  docker compose up -d        Stop:  docker compose down
+# Wipe data:  docker compose down -v
+services:
+  postgres:
+    image: postgres:16
+    container_name: pppk-postgres
+    environment:
+      POSTGRES_USER: medapp
+      POSTGRES_PASSWORD: medapp_dev_pw
+      POSTGRES_DB: medical
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medapp -d medical"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  pgadmin:
+    image: dpage/pgadmin4:8
+    container_name: pppk-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@local.dev
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    ports:
+      - "5050:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:
