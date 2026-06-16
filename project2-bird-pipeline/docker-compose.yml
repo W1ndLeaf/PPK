@@ -1,0 +1,50 @@
+# Project 2 storage: MongoDB (NoSQL) + MinIO (S3-compatible object storage).
+# Plus web UIs to inspect them: mongo-express (8081) and the MinIO console (9001).
+# Start:  docker compose up -d        Stop:  docker compose down        Wipe: docker compose down -v
+services:
+  mongo:
+    image: mongo:7
+    container_name: pppk-mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: bird
+      MONGO_INITDB_ROOT_PASSWORD: bird_dev_pw
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+
+  minio:
+    image: minio/minio:latest
+    container_name: pppk-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: birdminio
+      MINIO_ROOT_PASSWORD: birdminio_dev_pw
+    ports:
+      - "9000:9000"   # S3 API
+      - "9001:9001"   # web console
+    volumes:
+      - miniodata:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: pppk-mongo-express
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: bird
+      ME_CONFIG_MONGODB_ADMINPASSWORD: bird_dev_pw
+      ME_CONFIG_MONGODB_URL: mongodb://bird:bird_dev_pw@mongo:27017/
+      ME_CONFIG_BASICAUTH: "false"
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongo
+
+volumes:
+  mongodata:
+  miniodata:
