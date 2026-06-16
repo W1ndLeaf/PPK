@@ -17,10 +17,20 @@ public class MedicalContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
         if (!options.IsConfigured)
+            options.UseNpgsql(ResolveConnectionString());
+    }
+
+    // Connection string priority: MEDICAL_DB env var -> connection.txt file (e.g. Supabase) -> local Docker.
+    private static string ResolveConnectionString()
+    {
+        var env = Environment.GetEnvironmentVariable("MEDICAL_DB");
+        if (!string.IsNullOrWhiteSpace(env)) return env;
+        if (File.Exists("connection.txt"))
         {
-            var cs = Environment.GetEnvironmentVariable("MEDICAL_DB") ?? DefaultConnection;
-            options.UseNpgsql(cs);
+            var fromFile = File.ReadAllText("connection.txt").Trim();
+            if (fromFile.Length > 0) return fromFile;
         }
+        return DefaultConnection;
     }
 
     protected override void OnModelCreating(ModelBuilder b)

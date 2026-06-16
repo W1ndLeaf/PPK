@@ -1,6 +1,14 @@
 """Central configuration. Values come from environment variables (see .env.example),
-falling back to the defaults that match docker-compose.yml so it works out of the box."""
+falling back to the defaults that match docker-compose.yml so it works out of the box.
+A .env file (if present) is loaded automatically, so a cloud connection string
+(MongoDB Atlas) can be put there without touching the shell."""
 import os
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 # --- MongoDB (NoSQL store) ---
 # The root user is created by docker-compose, so we authenticate against the 'admin' db.

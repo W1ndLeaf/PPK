@@ -10,4 +10,4 @@ Pokriva ishode I1, I4, I5.
 Pipeline za obradu podataka o pticama. Python, MongoDB, MinIO.
 Pokriva ishode I2, I3.
 
-Baze se pokreću u Dockeru. Upute za pokretanje su u mapi svakog projekta.
+Baze se pokreću u Dockeru, a mogu se i usmjeriti na cloud (Supabase za Postgres, MongoDB Atlas za Mongo) preko connection stringa. Upute za pokretanje i cloud konfiguraciju su u mapi svakog projekta.

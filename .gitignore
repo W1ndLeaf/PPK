@@ -20,6 +20,7 @@ Thumbs.db
 # secrets
 appsettings.*.Local.json
 *.local.env
+connection.txt
 
 # course materials
 *.pdf

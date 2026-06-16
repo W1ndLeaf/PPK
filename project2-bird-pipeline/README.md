@@ -28,3 +28,12 @@ Pojedini korak:
 
 MongoDB: localhost:27017. MinIO konzola: http://localhost:9001. mongo-express: http://localhost:8081.
 Audio datoteke se stavljaju u mapu audio/, izvještaj se zapisuje u output/.
+
+## Cloud baza (MongoDB Atlas)
+Postavke se čitaju iz varijabli okruženja ili iz datoteke `.env` (kopiraj `.env.example` u `.env`).
+
+Za MongoDB Atlas: u klasteru klikni Connect -> Drivers, kopiraj connection string i stavi ga u `.env`:
+
+    MONGO_URI=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/?retryWrites=true&w=majority
+
+U Atlas Network Access dodaj svoj IP (ili 0.0.0.0/0). MinIO ostaje lokalni (Docker). (`.env` je u .gitignore.)
