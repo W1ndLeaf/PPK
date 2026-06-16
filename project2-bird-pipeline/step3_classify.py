@@ -1,15 +1,9 @@
-"""Step 3 (Ishod 2 desired + Ishod 3): classify each uploaded recording.
+"""Send each uploaded recording to the classify API and store the results.
 
-For every recording not yet classified:
-  1. read the audio back from MinIO,
-  2. POST it to the classify API (multipart field 'file'),
-  3. store the full request/response log as JSON in MinIO (LOG_BUCKET),
-  4. store normalized results in MongoDB 'classifications', linking each detected
-     bird to the matching 'species' document (by GBIF key or scientific name).
-
-The classifier returns {"results": [...]}. We keep the RAW response no matter its
-shape, and also extract a best-effort (name, key, confidence) per result so the
-report step can aggregate without us hard-coding the exact field names."""
+For every recording that isn't classified yet: read it back from MinIO, POST it to
+the API, save the response log in MinIO and the detections in MongoDB 'classifications'.
+Each detection is linked to the matching species (by key or scientific name), and the
+raw response is kept as well."""
 import io
 import json
 from datetime import datetime, timezone

@@ -1,8 +1,7 @@
-"""Step 2 (Ishod 2, minimal): upload audio files from a directory -> MinIO,
-and store each file's metadata (location, filename, object name) in MongoDB 'recordings'.
+"""Upload audio files to MinIO and save their metadata (filename, location) in MongoDB.
 
-Each file is uniquely identifiable in MinIO via an object name = "<uuid>_<filename>".
-Re-running won't re-upload a file that's already there (dedup on filename + size)."""
+Each file gets a unique object name "<uuid>_<filename>"; a file that's already
+uploaded (same name + size) is skipped."""
 import os
 import uuid
 import mimetypes

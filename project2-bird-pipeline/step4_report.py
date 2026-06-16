@@ -1,11 +1,8 @@
-"""Step 4: generate a CSV report of every bird species with >=1 positive classification.
+"""Write a CSV of every species that got at least one detection.
 
-Cleaning/transformation applied:
-  - skip result items that matched no species,
-  - enrich each row with family/order from the taxonomy collection (when the
-    detected species exists in our 1000-species subset),
-  - average the confidence scores, de-duplicate recordings/locations,
-  - optional case-insensitive species-name filter (--species)."""
+Skips unmatched results, adds family/order from the taxonomy when available,
+averages the confidence and de-duplicates recordings/locations. The optional
+--species filter narrows the report by name."""
 import csv
 import os
 import config

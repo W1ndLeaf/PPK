@@ -1,8 +1,7 @@
-"""Step 1 (Ishod 3, minimal): fetch bird taxonomy -> MongoDB 'species', avoiding duplicates.
+"""Download the bird taxonomy into MongoDB.
 
-The species 'key' (GBIF taxon key) is unique, so we use it as the MongoDB _id and upsert.
-Running again won't create duplicates. If the collection is already populated we skip the
-download entirely (the assignment says to skip this step if the data already exists)."""
+Uses the GBIF 'key' as the document _id, so re-running upserts instead of duplicating.
+Skips the download if the collection is already filled."""
 import requests
 from pymongo import UpdateOne
 import config
